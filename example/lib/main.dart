@@ -36,7 +36,15 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await EosPlugin.platformVersion;
+      var eosWallet = await EosPlugin.createEosWallet();
+      print("获取到的eos钱包账号是：$eosWallet");
+      var pk = await EosPlugin.mnemonicToPrivateKey(eosWallet.mnemonic);
+      //var pu = await EosPlugin.mnemonicToPublicKey(eosWallet.mnemonic);
+      var pu2 = await EosPlugin.privateKeyToPublicKey(pk);
+      platformVersion = eosWallet.toString();
+      print("获取到的eos钱包账号是pk：$pk");
+      //print("获取到的eos钱包账号是pu：$pu");
+      print("获取到的eos钱包账号是pu2：$pu2");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

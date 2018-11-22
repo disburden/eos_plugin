@@ -2,6 +2,7 @@ group 'name.wgq.eosplugin'
 version '1.0-SNAPSHOT'
 
 buildscript {
+    ext.kotlin_version = '1.2.51'
     repositories {
         google()
         jcenter()
@@ -9,6 +10,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -20,10 +22,14 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,4 +37,25 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    // mnemonic-sdk 导入
+    implementation 'org.slf4j:slf4j-nop:1.7.25'
+    implementation 'com.lhalcyon:bip32:1.0.0'
+    implementation 'io.github.novacrypto:BIP44:0.0.3'
+    implementation 'com.madgag.spongycastle:core:1.58.0.0@jar'
+
+    // wallet-eos 导入
+    implementation 'com.squareup.retrofit2:converter-jackson:2.0.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.0.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
 }
