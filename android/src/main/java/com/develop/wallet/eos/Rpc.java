@@ -178,8 +178,14 @@ public class Rpc {
             throws Exception {
         // get chain info
         ChainInfo info = getChainInfo();
+        if (BuildConfig.DEBUG) {
+            System.out.print("info:" + info);
+        }
         // get block info
         Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+        if (BuildConfig.DEBUG) {
+            System.out.print("block:" + block);
+        }
         // tx
         Tx tx = new Tx();
         tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
