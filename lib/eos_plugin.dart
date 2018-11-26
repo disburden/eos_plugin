@@ -43,4 +43,18 @@ class EosPlugin {
     final String pubKey = await _channel.invokeMethod('privateKeyToPublicKey', privateKey);
     return pubKey;
   }
+
+  /// 转账
+  static Future<bool> transfer(String code, String eosBaseUrl, String fromAccount, String fromPrivateKey, String toAccount, String quantity, String memo) async {
+    var map = Map();
+    map["code"] = code;
+    map["eosBaseUrl"] = eosBaseUrl;
+    map["fromAccount"] = fromAccount;
+    map["fromPrivateKey"] = fromPrivateKey;
+    map["toAccount"] = toAccount;
+    map["quantity"] = quantity;
+    map["memo"] = memo;
+    final String result = await _channel.invokeMethod("transfer", map) as String;
+    return result == "success";
+  }
 }
