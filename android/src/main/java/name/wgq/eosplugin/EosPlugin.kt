@@ -98,6 +98,7 @@ class EosPlugin() : MethodCallHandler {
             WalletManager.transfer(fromAccount, fromPrivateKey, toAccount, quantity, memo)
             result.success("success")
         } catch (e: Exception) {
+            System.out.print("失败原因：${e.message} -- $e")
             result.success("failed")
         }
     }
