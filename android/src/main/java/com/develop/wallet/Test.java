@@ -56,7 +56,7 @@ public class Test {
         WalletManager.queryAccount(accountB);
 
         // 转账
-        WalletManager.transfer(accountA, privateKeyA, accountB, "1.0000 SYS", "xxx");
+        //WalletManager.transfer(accountA, privateKeyA, accountB, "1.0000 SYS", "xxx");
 
         WalletManager.up(accountA, privateKeyA, accountB, "1.0000 SYS");
 
