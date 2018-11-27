@@ -39,9 +39,7 @@ public class Generator {
 
     public static <T> T executeSync(Call<T> call) {
         try {
-            System.out.print("请求 -- call request：" + call.request().toString());
             Response<T> response = call.execute();
-            System.out.print("请求 -- response code：" + response.code());
             if (response.isSuccessful()) {
                 return response.body();
             } else {
@@ -49,7 +47,6 @@ public class Generator {
                 throw new ApiException(apiError);
             }
         } catch (IOException e) {
-            System.out.print("执行错误：" + e.toString());
             throw new ApiException(e);
         }
     }

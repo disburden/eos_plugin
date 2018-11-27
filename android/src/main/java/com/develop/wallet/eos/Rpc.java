@@ -1,5 +1,7 @@
 package com.develop.wallet.eos;
 
+import android.util.Log;
+
 import com.develop.wallet.BuildConfig;
 import com.develop.wallet.eos.api.RpcService;
 import com.develop.wallet.eos.api.http.Generator;
@@ -85,7 +87,9 @@ public class Rpc {
      * @return
      * @throws Exception
      */
-    public Transaction pushTransaction(String compression, Tx pushTransaction, String[] signatures) throws Exception {
+    public Transaction pushTransaction(String compression, Tx pushTransaction, String[] signatures)
+            throws Exception
+    {
 //		ObjectMapper mapper = new ObjectMapper();
 //		String mapJakcson = mapper.writeValueAsString(new TxRequest(compression, pushTransaction, signatures));
 //		System.out.println(mapJakcson);
@@ -137,11 +141,18 @@ public class Rpc {
      * @throws Exception
      */
     public Transaction transfer(String pk, String contractAccount, String from, String to, String quantity, String memo)
-            throws Exception {
+            throws Exception
+    {
         // get chain info
         ChainInfo info = getChainInfo();
+        if (BuildConfig.DEBUG) {
+            Log.d("hbl", "获取链信息 -- info:" + info);
+        }
         // get block info
         Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+        if (BuildConfig.DEBUG) {
+            Log.d("hbl", "获取块信息 -- block:" + block);
+        }
         // tx
         Tx tx = new Tx();
         tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
@@ -170,6 +181,7 @@ public class Rpc {
         action.setData(data);
         // reset expiration
         tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+        Log.d("hbl", "交易信息 -- tx:" + tx);
         return pushTransaction("none", tx, new String[]{sign});
     }
 
@@ -178,14 +190,8 @@ public class Rpc {
             throws Exception {
         // get chain info
         ChainInfo info = getChainInfo();
-        if (BuildConfig.DEBUG) {
-            System.out.print("info:" + info);
-        }
         // get block info
         Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
-        if (BuildConfig.DEBUG) {
-            System.out.print("block:" + block);
-        }
         // tx
         Tx tx = new Tx();
         tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);

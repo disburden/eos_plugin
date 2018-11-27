@@ -125,4 +125,19 @@ public class Block {
         this.refBlockPrefix = refBlockPrefix;
     }
 
+    @Override
+    public String toString() {
+        return "Block{" +
+                "timestamp=" + timestamp +
+                ", producer='" + producer + '\'' +
+                ", confirmed=" + confirmed +
+                ", previous='" + previous + '\'' +
+                ", transactionMroot='" + transactionMroot + '\'' +
+                ", actionMroot='" + actionMroot + '\'' +
+                ", scheduleVersion='" + scheduleVersion + '\'' +
+                ", id='" + id + '\'' +
+                ", blockNum=" + blockNum +
+                ", refBlockPrefix=" + refBlockPrefix +
+                '}';
+    }
 }

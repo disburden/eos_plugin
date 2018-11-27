@@ -1,5 +1,6 @@
 package name.wgq.eosplugin;
 
+import android.util.Log
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
@@ -12,6 +13,7 @@ import com.develop.wallet.WalletManager
 import com.develop.wallet.eos.utils.EccTool
 import java.util.HashMap
 import com.develop.wallet.BuildConfig
+import com.develop.wallet.eos.utils.EException
 
 class EosPlugin() : MethodCallHandler {
     companion object {
@@ -94,13 +96,18 @@ class EosPlugin() : MethodCallHandler {
     private fun transfer(code: String, eosBaseUrl: String, fromAccount: String, fromPrivateKey: String, toAccount: String, quantity: String, memo: String, result: Result) {
         BuildConfig.EOS_CREATOR_ACCOUNT = code
         BuildConfig.EOS_URL = eosBaseUrl
-        try {
-            WalletManager.transfer(fromAccount, fromPrivateKey, toAccount, quantity, memo)
-            result.success("success")
-        } catch (e: Exception) {
-            System.out.print("失败原因：${e.message} -- $e")
-            result.success("failed")
-        }
+        Thread {
+            try {
+                WalletManager.transfer(fromAccount, fromPrivateKey, toAccount, quantity, memo)
+                result.success("success")
+            } catch (e: Exception) {
+                Log.d("hbl", "失败原因：$e")
+                if(e is EException){
+                    Log.d("hbl", "失败原因：${e.code}  -- ${e.msg}")
+                }
+                result.success("failed")
+            }
+        }.start()
     }
 
 }

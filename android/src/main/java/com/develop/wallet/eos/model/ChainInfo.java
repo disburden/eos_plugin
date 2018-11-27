@@ -167,4 +167,22 @@ public class ChainInfo {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        return "ChainInfo{" +
+                "serverVersion='" + serverVersion + '\'' +
+                ", chainId='" + chainId + '\'' +
+                ", headBlockNum='" + headBlockNum + '\'' +
+                ", lastIrreversibleBlockNum=" + lastIrreversibleBlockNum +
+                ", lastIrreversibleBlockId='" + lastIrreversibleBlockId + '\'' +
+                ", headBlockId='" + headBlockId + '\'' +
+                ", headBlockTime=" + headBlockTime +
+                ", headBlockProducer='" + headBlockProducer + '\'' +
+                ", virtualBlockCpuLimit='" + virtualBlockCpuLimit + '\'' +
+                ", virtualBlockNetLimit='" + virtualBlockNetLimit + '\'' +
+                ", blockCpuLimit='" + blockCpuLimit + '\'' +
+                ", blockNetLimit='" + blockNetLimit + '\'' +
+                '}';
+    }
 }
