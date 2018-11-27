@@ -119,8 +119,8 @@ public class WalletManager {
      * @param quantity
      * @param memo
      */
-    public static void transfer(String fromAccount, String fromPrivateKey, String toAccount, String quantity, String memo) {
-        try {
+    public static void transfer(String fromAccount, String fromPrivateKey, String toAccount, String quantity, String memo) throws Exception {
+        //try {
             /**
              * {"transaction_id":"f9c09e7584432228394323199909b93ea11820d47f011ee1bf33a1210d4b74ba",
              * "processed":{"id":"f9c09e7584432228394323199909b93ea11820d47f011ee1bf33a1210d4b74ba",
@@ -143,12 +143,12 @@ public class WalletManager {
              * "total_cpu_usage":0,"trx_id":"f9c09e7584432228394323199909b93ea11820d47f011ee1bf33a1210d4b74ba","inline_traces":[]}]}],"except":null}}
              */
             Transaction results = getRpc().transfer(fromPrivateKey, BuildConfig.EOS_CREATOR_ACCOUNT, fromAccount, toAccount, quantity, memo);
-            log("transfer success transactionId = " + results.getTransactionId());
-        } catch (ApiException ae) {
-            log(String.format("code = %s, message = %s", ae.getError().getError().getCode(), ae.getError().getError().getDetails()[0].getMessage()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //    log("transfer success transactionId = " + results.getTransactionId());
+        //} catch (ApiException ae) {
+        //    log(String.format("code = %s, message = %s", ae.getError().getError().getCode(), ae.getError().getError().getDetails()[0].getMessage()));
+        //} catch (Exception e) {
+        //   e.printStackTrace();
+        //}
     }
 
     /**

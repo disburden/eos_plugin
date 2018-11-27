@@ -101,4 +101,19 @@ public class Tx extends BaseTx {
     public void setTransaction_extensions(List<TxExtenstions> transaction_extensions) {
         this.transaction_extensions = transaction_extensions;
     }
+
+    @Override
+    public String toString() {
+        return "Tx{" +
+                "expiration=" + expiration +
+                ", ref_block_num=" + ref_block_num +
+                ", ref_block_prefix=" + ref_block_prefix +
+                ", net_usage_words=" + net_usage_words +
+                ", max_cpu_usage_ms=" + max_cpu_usage_ms +
+                ", delay_sec=" + delay_sec +
+                ", context_free_actions=" + context_free_actions +
+                ", actions=" + actions +
+                ", transaction_extensions=" + transaction_extensions +
+                '}';
+    }
 }

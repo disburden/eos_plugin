@@ -1,5 +1,6 @@
 package name.wgq.eosplugin;
 
+import android.util.Log
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
@@ -8,8 +9,11 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 import com.develop.mnemonic.KeyPairUtils
 import com.develop.mnemonic.MnemonicUtils
+import com.develop.wallet.WalletManager
 import com.develop.wallet.eos.utils.EccTool
 import java.util.HashMap
+import com.develop.wallet.BuildConfig
+import com.develop.wallet.eos.utils.EException
 
 class EosPlugin() : MethodCallHandler {
     companion object {
@@ -33,6 +37,9 @@ class EosPlugin() : MethodCallHandler {
         } else if (call.method == "privateKeyToPublicKey") {
             val pubKey = privateKeyToPublicKey(call.arguments as String)
             result.success(pubKey)
+        } else if (call.method == "transfer") {
+            val map = call.arguments as HashMap<String, String>
+            transfer(map["code"]!!, map["eosBaseUrl"]!!, map["fromAccount"]!!, map["fromPrivateKey"]!!, map["toAccount"]!!, map["quantity"]!!, map["memo"] ?: "", result)
         } else {
             result.notImplemented()
         }
@@ -83,6 +90,24 @@ class EosPlugin() : MethodCallHandler {
         // 生成EOS公钥
         val pu = EccTool.privateToPublic(privateKey)
         return pu
+    }
+
+    // 转账
+    private fun transfer(code: String, eosBaseUrl: String, fromAccount: String, fromPrivateKey: String, toAccount: String, quantity: String, memo: String, result: Result) {
+        BuildConfig.EOS_CREATOR_ACCOUNT = code
+        BuildConfig.EOS_URL = eosBaseUrl
+        Thread {
+            try {
+                WalletManager.transfer(fromAccount, fromPrivateKey, toAccount, quantity, memo)
+                result.success("success")
+            } catch (e: Exception) {
+                Log.d("hbl", "失败原因：$e")
+                if(e is EException){
+                    Log.d("hbl", "失败原因：${e.code}  -- ${e.msg}")
+                }
+                result.success("failed")
+            }
+        }.start()
     }
 
 }

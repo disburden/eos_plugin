@@ -38,9 +38,32 @@ class EosPlugin {
 //    return pubKey;
 //  }
 
+<<<<<<< HEAD
 	/// 私钥 推导出 公钥
 	static Future<String> privateKeyToPublicKey(String privateKey) async {
 		final String pubKey = await _channel.invokeMethod('privateKeyToPublicKey', privateKey);
 		return pubKey;
 	}
 }
+=======
+  /// 私钥 推导出 公钥
+  static Future<String> privateKeyToPublicKey(String privateKey) async {
+    final String pubKey = await _channel.invokeMethod('privateKeyToPublicKey', privateKey);
+    return pubKey;
+  }
+
+  /// 转账
+  static Future<bool> transfer(String code, String eosBaseUrl, String fromAccount, String fromPrivateKey, String toAccount, String quantity, String memo) async {
+    var map = Map();
+    map["code"] = code;
+    map["eosBaseUrl"] = eosBaseUrl;
+    map["fromAccount"] = fromAccount;
+    map["fromPrivateKey"] = fromPrivateKey;
+    map["toAccount"] = toAccount;
+    map["quantity"] = quantity;
+    map["memo"] = memo;
+    final String result = await _channel.invokeMethod("transfer", map) as String;
+    return result == "success";
+  }
+}
+>>>>>>> dce8b16c124116ed9a0741d584224f6f25b7e59b
