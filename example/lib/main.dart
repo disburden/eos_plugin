@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       platformVersion = 'Failed to get platform version.';
     }
 
-    var quantity = (2.0.toString().split(".")[0] + "." + 2.0.toString().split(".")[1] + "0000".substring(0, 3)) + " EOS";
+    var quantity = (2.0.toString().split(".")[0] + "." + (2.0.toString().split(".")[1] + "0000").substring(0, 4)) + " EOS";
     print("quantity -----=  ：$quantity");
     await EosPlugin.transfer("eosio.token", "http://dev.cryptolions.io:38888", "vo2ye2oxs2qp", "5HvhDiNmFE8wMnBXbkuCZtiEVfbqRFePf51TzAf8XvX5XZomq4e", "wumingdengng", quantity, "33");
 
