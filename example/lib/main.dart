@@ -14,16 +14,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
 
-  String dd = '''
-  ♏️必抢！iPhone
-☻——————————☻
 
-👉苹果数据线充电线1m 
-👉劵后【1.9元】包邮秒杀 
-👉3C认证，无损急速
-👉2A快速充电，七重保护
-👉智能兼容，双口输出，
-👉体积小巧，携带方便！''';
 
   @override
   void initState() {

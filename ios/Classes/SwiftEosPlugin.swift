@@ -43,6 +43,40 @@ public class SwiftEosPlugin: NSObject, FlutterPlugin {
             result(importedPub.rawPublicKey());
         }
         
+    case "transfer":
+        do {
+            let map  = call.arguments as! Dictionary<String,String>;
+            let code = map["code"]!;
+            let eosBaseUrl = map["eosBaseUrl"]!;
+            let fromAccount = map["fromAccount"]!;
+            let fromPrivateKey = map["fromPrivateKey"]!;
+            let toAccount = map["toAccount"]!;
+            let quantity = map["quantity"]!;
+            let memo = map["memo"]!;
+            
+            var transfer = Transfer()
+            transfer.from = fromAccount
+            transfer.to = toAccount
+            transfer.quantity = quantity
+            transfer.memo = memo
+            
+            EOSRPC.endpoint = eosBaseUrl;
+            let pk = try! PrivateKey(keyString: fromPrivateKey);
+            Currency.transferCurrency(transfer: transfer, code: code, privateKey: pk!, completion: { (rs, error) in
+                if error != nil {
+                    if error is RPCErrorResponse {
+                        print("\((error as! RPCErrorResponse).errorDescription())")
+                    } else {
+                        print("other error: \(String(describing: error?.localizedDescription))")
+                    }
+                    result("failed");
+                } else {
+                    print("done.")
+                    result("success");
+                }
+            })
+        }
+        
     default:
         do {
         //

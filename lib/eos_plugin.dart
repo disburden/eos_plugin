@@ -32,20 +32,7 @@ class EosPlugin {
 		return priKey;
 	}
 
-//  /// 助记词 推导出 公钥
-//  static Future<String> mnemonicToPublicKey(String mnemonic) async {
-//    final String pubKey = await _channel.invokeMethod('mnemonicToPublicKey', mnemonic);
-//    return pubKey;
-//  }
 
-<<<<<<< HEAD
-	/// 私钥 推导出 公钥
-	static Future<String> privateKeyToPublicKey(String privateKey) async {
-		final String pubKey = await _channel.invokeMethod('privateKeyToPublicKey', privateKey);
-		return pubKey;
-	}
-}
-=======
   /// 私钥 推导出 公钥
   static Future<String> privateKeyToPublicKey(String privateKey) async {
     final String pubKey = await _channel.invokeMethod('privateKeyToPublicKey', privateKey);
@@ -66,4 +53,3 @@ class EosPlugin {
     return result == "success";
   }
 }
->>>>>>> dce8b16c124116ed9a0741d584224f6f25b7e59b
